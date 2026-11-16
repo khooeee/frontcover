@@ -1,0 +1,67 @@
+{
+  "name": "frontcover",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Record Playwright E2E tests, then see which code paths no test has reached.",
+  "keywords": [
+    "playwright",
+    "coverage",
+    "e2e",
+    "testing",
+    "codegen",
+    "v8",
+    "istanbul"
+  ],
+  "type": "module",
+  "bin": {
+    "frontcover": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./playwright": {
+      "types": "./dist/playwright.d.ts",
+      "default": "./dist/playwright.js"
+    },
+    "./reporter": {
+      "types": "./dist/coverage/reporter.d.ts",
+      "default": "./dist/coverage/reporter.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && vitest run",
+    "test:example": "npm run build && npm run frontcover -w todo-app -- run",
+    "test:e2e": "npm run build && node test/e2e.mjs",
+    "test:package": "node test/package.mjs"
+  },
+  "peerDependencies": {
+    "@playwright/test": ">=1.49"
+  },
+  "dependencies": {
+    "monocart-coverage-reports": "^3.2.1",
+    "picomatch": "^4.0.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^22.18.0",
+    "@types/picomatch": "^4.0.3",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "workspaces": [
+    "examples/*"
+  ]
+}
